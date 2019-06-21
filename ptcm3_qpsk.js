@@ -38,6 +38,7 @@ function setAudioElementForData(element) {
 /*--------*/
 
 window.sampleRate=8182*2;
+window.blocksize=512;
 
 function fileOpen(evt) {
 	elmAudioPlay.src = null;
@@ -51,8 +52,8 @@ function fileOpen(evt) {
 		displayInfo(data);
 
 		var i, len = data.length, signals = "";
-		for (i = 0; i < len; i += 512) {
-			signals += createSyncSignal() + createDataSignal(data.substr(i, 512));
+		for (i = 0; i < len; i += blocksize) {
+			signals += createSyncSignal() + createDataSignal(data.substr(i, blocksize));
 			if (i % 3 == 0) signals += String.fromCharCode(0xC0, 0x40);
 		}
 		signals+=String.fromCharCode(0x80).repeat(1000);
@@ -112,10 +113,12 @@ function createDataSignal(data) {
 
 	for (i = 0; i < len; i++) {
 		val = data.charCodeAt(i);
-		rs_val = rs_ary[val >> 4 & 0xf] << 7 | rs_ary[val & 0xf];
-		for (j = 12; j >= 0; j -= 2) {
-			signals += ptn_ary[rs_val >> j & 3];
-		}
+		for(j=0;j<8;j+=2)
+			signals += ptn_ary[val>>j & 3];
+		//rs_val = rs_ary[val >> 4 & 0xf] << 7 | rs_ary[val & 0xf];
+		//for (j = 12; j >= 0; j -= 2) {
+		//	signals += ptn_ary[rs_val >> j & 3];
+		//}
 	}
 	return signals;
 }

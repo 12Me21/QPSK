@@ -37,7 +37,7 @@ function setAudioElementForData(element) {
 
 /*--------*/
 
-window.sampleRate=8182*2;
+window.sampleRate=8182;
 window.blocksize=512;
 
 function fileOpen(evt) {

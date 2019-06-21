@@ -37,6 +37,8 @@ function setAudioElementForData(element) {
 
 /*--------*/
 
+window.sampleRate=8182*2;
+
 function fileOpen(evt) {
 	elmAudioPlay.src = null;
 	displayInfo(null);
@@ -53,7 +55,8 @@ function fileOpen(evt) {
 			signals += createSyncSignal() + createDataSignal(data.substr(i, 512));
 			if (i % 3 == 0) signals += String.fromCharCode(0xC0, 0x40);
 		}
-		var wavedata = generateWavData(8182 * 3, 1, 8, signals);
+		signals+=String.fromCharCode(0x80).repeat(1000);
+		var wavedata = generateWavData(window.sampleRate * 3, 1, 8, signals);
 		var dataurl = "data:audio/wav;base64," + btoa(wavefile);
 		elmAudioPlay.src = dataurl;
 	}

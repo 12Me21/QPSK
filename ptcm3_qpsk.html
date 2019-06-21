@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="3rdparty/md5.js"></script>
+		<script type="text/javascript" src="3rdparty/base64.js"></script>
+		<script type="text/javascript" src="wave.js"></script>
+		<script type="text/javascript" src="ptcm3_qpsk.js"></script>
+	</head>
+
+	<body>
+		<input id="btn_afile" type="file" name="srcfile"><br>
+		<div id="div_info"></div>
+		<audio id="audio_data" controls></audio>
+		<script>
+			setDivElementForInfo($("div_info"));
+			setAudioElementForData($("audio_data"));
+			$("btn_afile").onchange = fileOpen;
+			displayInfo(null);
+		</script>
+		<hr>
+	</body>
+</html>

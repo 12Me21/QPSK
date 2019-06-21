@@ -7,10 +7,6 @@
  * This software is released under the MIT License.
  * http://opensource.org/licenses/mit-license.php
  * 
- * This module depends on the following JavaScripts:
- *  - "wave.js"
- *  - "md5.js", "base64.js"
- *    http://www.onicos.com/staff/iz/amuse/javascript/expert/
  */
 
 var elmDivInfo;
@@ -58,7 +54,7 @@ function fileOpen(evt) {
 			if (i % 3 == 0) signals += String.fromCharCode(0xC0, 0x40);
 		}
 		var wavedata = generateWavData(8182 * 3, 1, 8, signals);
-		var dataurl = "data:audio/wav;base64," + base64encode(wavefile);
+		var dataurl = "data:audio/wav;base64," + btoa(wavefile);
 		elmAudioPlay.src = dataurl;
 	}
 	reader.readAsBinaryString(file);
@@ -74,15 +70,6 @@ function displayInfo(data) {
 
 	text = "Data size: ";
 	if (data) text += data.length + " bytes";
-	appendInfo(text);
-
-	text = "MD5 Digest: ";
-	if (data) {
-		var md5 = MD5_hash(data);
-		for (i = 0; i < 16; i++) {
-			text += ("0" + md5.charCodeAt(i).toString(16)).slice(-2);
-		}
-	}
 	appendInfo(text);
 
 	text = "Checksum: ";
